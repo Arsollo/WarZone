@@ -7,6 +7,7 @@
 #include "Map.h"
 #include "Orders.h"
 #include "Card.h"
+#include "PlayerStrategy.h"
 
 using namespace std;
 
@@ -15,7 +16,7 @@ using namespace std;
     public:
 
         Player();
-        Player(string n, int r,vector<Territory*> t, vector<Card*> h, vector<Order*> o);
+        Player(string n, int r,vector<Territory*> t, vector<Card*> h, vector<Order*> o, PlayerStrategy* p);
         Player(string n);
         Player(const Player& other);
         ~Player();
@@ -44,7 +45,7 @@ using namespace std;
         vector<Territory*> territories;
         vector<Card*> hand;
         vector<Order*> orderList;
-
+        PlayerStrategy* ps;
     };
 
 
