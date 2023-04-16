@@ -1,5 +1,4 @@
-#ifndef WARZONE_PLAYER_H
-#define WARZONE_PLAYER_H
+#pragma once
 
 #include <iostream>
 #include <vector>
@@ -7,9 +6,11 @@
 #include "Map.h"
 #include "Orders.h"
 #include "Card.h"
-#include "PlayerStrategy.h"
+//#include "PlayerStrategy.h"
 
 using namespace std;
+
+class PlayerStrategy;
 
     class Player //header class for Player of warzone containing the declaration of methods to be implemented in the source code as well as data members
     {
@@ -49,5 +50,5 @@ using namespace std;
     };
 
 
-#endif //WARZONE_PLAYER_H
+//#endif //WARZONE_PLAYER_H
 
