@@ -57,13 +57,12 @@ namespace CommandProcessing
 			virtual void getCommand();
 			void setGameState(string a);
 
-
+			bool validate(vector<string>  listofmapfiles, vector<string>  listofplayerstrategies, int numberofgames, int maxnumberofturns);
 			void stringToLog(string s);
 
 		protected:
 			string userinput;
 			void saveCommand(Command commandobj);
-			void validate(vector<string>  listofmapfiles, vector<string>  listofplayerstrategies, int numberofgames, int maxnumberofturns);
 			void validate(string cgs, string ui, Command& commandobj);
 			void displayInfo();	//utility function to display info on the current state
 			void printList();	//utility function to print the command list

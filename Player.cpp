@@ -67,7 +67,7 @@ using namespace std;
 
     vector<Territory *> Player::toDefend() //returns list of territories to be defended
     {
-        return ps->toDefend();
+        ;
     }
 
     vector<Territory *> Player::toAttack() //returns arbitrary list of territories to be attacked

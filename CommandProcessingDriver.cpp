@@ -81,15 +81,24 @@ int main(int argc, char* argv[])
 		} while (true);
 		listplayerstrategies.push_back(playerstrategies.substr(start));
 
-		for(string t: listplayerstrategies)
-			cout << t <<endl;
+//		for(string t: listplayerstrategies)
+//			cout << t <<endl;
+
+		//Validating the command
+		CommandProcessing::CommandProcessor cp;
+		bool temp = cp.validate(listmapfiles, listplayerstrategies, numberofgames, maxnumberofturns);
+		if(temp == false)
+		{
+			cout << "Terminating program..." << endl;
+			exit(0);
+		}
+
+
 
 		//Calling GameEngine
 		GameEngine::GameEngine ge;
 		ge.tournament(listmapfiles, listplayerstrategies, numberofgames, maxnumberofturns);
 
-		CommandProcessing::CommandProcessor cp;
-		cp.getCommand();
 
 
 	}
