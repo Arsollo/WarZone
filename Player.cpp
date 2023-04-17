@@ -11,6 +11,8 @@ using namespace std;
         vector<Territory*> territories;
         vector<Card*> hand;
         vector<Order*> orderList;
+        PlayerStrategy* ps;
+        wasattacked = false;
     }
 
     Player::Player(string n) //constructor with parameters
@@ -19,13 +21,14 @@ using namespace std;
 		this->name = n;
 	}
 
-    Player::Player(string n, int r, vector<Territory*> t, vector<Card*> h, vector<Order*> o) //constructor with parameters
+    Player::Player(string n, int r, vector<Territory*> t, vector<Card*> h, vector<Order*> o, PlayerStrategy* p) //constructor with parameters
     {
     	this->reinforcementPool = r;
     	this->name = n;
         this->territories = t;
         this->hand = h;
         this->orderList = o;
+        this->ps = p;
     }
 
     Player::Player(const Player& other) //copy constructor
@@ -35,6 +38,7 @@ using namespace std;
         this->territories = other.territories;
         this->hand = other.hand;
         this->orderList = other.orderList;
+        this->ps = other.ps;
     }
 
     Player& Player::operator=(const Player &other) //assignment operator
@@ -49,6 +53,7 @@ using namespace std;
         this->territories = other.territories;
         this->hand = other.hand;
         this->orderList = other.orderList;
+        this->ps = other.ps;
 
         return *this;
     }
@@ -67,28 +72,12 @@ using namespace std;
 
     vector<Territory *> Player::toAttack() //returns arbitrary list of territories to be attacked
     {
-        // vector<Territory*> tAttack;
-        // Territory *dt1 = new Territory(3, "Belgium", 1, 0);
-        // Territory *dt2 = new Territory(4, "Norway", 1, 0);
-        // tAttack.push_back(dt1);
-        // tAttack.push_back(dt2);
-
-
-        // for (int i = 0; i < tAttack.size(); i++)
-        // {
-        //     //cout << tAttack[i] << "" << endl;
-        // }
-        // return tAttack;
-
         return ps->toAttack();
     }
 
     void Player::issueOrder() //adds new order to the orderList
     {
-        vector<Territory*> td = toDefend();
-        vector<Territory*> ta = toAttack();
-        Order *o = new Order();
-        orderList.push_back(o);
+        ps->issueOrder();
     }
 
     void Player::printOrderList() //for later display of orderList
@@ -119,6 +108,12 @@ using namespace std;
     {
     	territories.push_back(t);
     }
+
+    void Player::removeTerritory(Territory* t)
+    {
+        territories.erase(std::remove(territories.begin(), territories.end(), t), territories.end());
+    }
+
 
     void Player::updateReinforcementPool(int r)
     {
@@ -166,3 +161,7 @@ using namespace std;
         return orderList;
     }
 
+    void Player::setAttackState(bool a)
+    {
+        wasattacked = a;
+    }

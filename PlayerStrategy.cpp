@@ -1,19 +1,23 @@
+#pragma once
 #include "PlayerStrategy.h"
-#include "Map.h"
+
 // Human Player Strategy
 void HumanPlayerStrategy::issueOrder()
 {
-
+	string ordername;
+	cin >> ordername;
+	Order* o = new Order();
+	p->orderList.push_back(o);
 }
 
 vector<Territory*> HumanPlayerStrategy::toAttack()
 {
-
+	return p->getTerritories();
 }
 
 vector<Territory*> HumanPlayerStrategy::toDefend()
 {
-
+	return p->getTerritories();
 }
 
 
@@ -49,7 +53,7 @@ vector<Territory> AggressivePlayerStrategy::toAttack()
 
 }
 
-Territory * AggressivePlayerStrategy::toDefend()
+Territory* AggressivePlayerStrategy::toDefend()
 {
     vector<Territory*> territories = p->getTerritories();
     int max = 0;
@@ -83,7 +87,7 @@ vector<Territory*> BenevolentPlayerStrategy::toAttack()
 
 }
 
-Territory * BenevolentPlayerStrategy::toDefend()
+Territory* BenevolentPlayerStrategy::toDefend()
 {
     vector<Territory*> territories = p->getTerritories();
     int min = 100;
@@ -105,17 +109,23 @@ Territory * BenevolentPlayerStrategy::toDefend()
 // Neutral Player Strategy
 void NeutralPlayerStrategy::issueOrder()
 {
-
+	//do nothing
 }
 
 vector<Territory*> NeutralPlayerStrategy::toAttack()
 {
-
+	//do nothing
+	return p->getTerritories();
 }
 
 vector<Territory*> NeutralPlayerStrategy::toDefend()
 {
+	if (p->getNoTerritories() < oldterritorycount)
+	{
+		p->setAttackState(true);
+	}
 
+	oldterritorycount = p->getNoTerritories();
 }
 
 
@@ -124,15 +134,25 @@ vector<Territory*> NeutralPlayerStrategy::toDefend()
 // Cheater Player Strategy
 void CheaterPlayerStrategy::issueOrder()
 {
-
+	//do nothing
 }
 
 vector<Territory*> CheaterPlayerStrategy::toAttack()
 {
-
+	//iterate through the player's territories, find the adjacent ones, and assign them to the cheater player
+	for (auto i : p->getTerritories())
+	{
+        //iterate through the vector list returned by getTerritories()
+        for (auto j : m.getAdjacentTerritories(*i))
+        {
+            p->assignTerritory(new Territory(j));   //assign the territory to the cheater player
+            delete i;   //delete the old territory
+        }
+	}
 }
 
 vector<Territory*> CheaterPlayerStrategy::toDefend()
 {
-
+	//do nothing
+	return p->getTerritories();
 }

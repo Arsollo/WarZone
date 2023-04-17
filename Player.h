@@ -1,5 +1,4 @@
-#ifndef WARZONE_PLAYER_H
-#define WARZONE_PLAYER_H
+#pragma once
 
 #include <iostream>
 #include <vector>
@@ -9,16 +8,16 @@
 #include "Card.h"
 //#include "PlayerStrategy.h"
 
-
-class PlayerStrategy;
 using namespace std;
+
+    class PlayerStrategy;   //forward declaration to avoid circular dependency
 
     class Player //header class for Player of warzone containing the declaration of methods to be implemented in the source code as well as data members
     {
     public:
 
         Player();
-        Player(string n, int r,vector<Territory*> t, vector<Card*> h, vector<Order*> o);
+        Player(string n, int r,vector<Territory*> t, vector<Card*> h, vector<Order*> o, PlayerStrategy* p);
         Player(string n);
         Player(const Player& other);
         ~Player();
@@ -39,17 +38,19 @@ using namespace std;
         int getNoTerritories();
         vector<Territory*> getTerritories();
         vector<Order*> getOrderList();
-
+        void setAttackState(bool a);
+        void removeTerritory(Territory* t);
+        vector<Order*> orderList;
 
     private:
         string name;
         int reinforcementPool;
         vector<Territory*> territories;
         vector<Card*> hand;
-        vector<Order*> orderList;
-
+        PlayerStrategy* ps;
+        bool wasattacked;
     };
 
 
-#endif //WARZONE_PLAYER_H
+//#endif //WARZONE_PLAYER_H
 
