@@ -251,6 +251,11 @@ void Map::printAdjacentTerritoryGraph()
 
 }
 
+vector<Territory> Map::getAdjacentTerritories(Territory t)
+{
+    return adjacentTerritories[t.getTerritory_id()];
+}
+
 void Map::printContinentGraph()
 {
 	cout << "\nGraph of continents: " << endl;
