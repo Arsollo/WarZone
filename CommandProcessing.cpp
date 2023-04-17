@@ -181,6 +181,15 @@ void CommandProcessor::changeState(string s)
 	currentgamestate = new string(s);
 }
 
+
+void CommandProcessor::validate(vector<string>  listofmapfiles, vector<string>  listofplayerstrategies, int numberofgames, int maxnumberofturns)
+{
+	//
+}
+
+
+
+
 //Parameters:
 //cgs: String representing the current game state
 //ui:  String representing the user input

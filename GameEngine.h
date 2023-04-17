@@ -64,6 +64,9 @@ namespace GameEngine
             void executeOrdersPhase();
 			void stringToLog(string s);
 
+			//tournament
+			void tournament(vector<string>  listofmapfiles, vector<string>  listofplayerstrategies, int numberofgames, int maxnumberofturns);
+
 		private:
 			string* usercommand;		//will store the command that is input
 			GameState* currentgamestate;	//stores the current state of the game

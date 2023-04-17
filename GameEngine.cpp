@@ -4,6 +4,7 @@
 #include "CommandProcessing.h"
 #include "Card.h"
 #include <string>
+#include <cmath>
 #include <vector>
 #include <iostream>
 #include <filesystem>
@@ -415,7 +416,8 @@ namespace GameEngine
 
         // ---------------------------------------- AssignReinforcement ---------------------------------------- //
 
-        if(*usercommand == "assigncountries")
+        //if(*usercommand == "assigncountries")
+    	 if(true)
         {
             vector<Continent> c = map->getContinents(); //retrieve continents list for user selected map
             for (int i = 0; i < c.size() ; i++)
@@ -457,7 +459,8 @@ namespace GameEngine
     void GameEngine::issueOrdersPhase()
     {
         // ---------------------------------------- IssueOrders ---------------------------------------- //
-        if(*usercommand == "issueorder")
+        //if(*usercommand == "issueorder")
+        if(true)
         {
             //iterate through players and have them issue orders to add to their orderlist
             for (int y = 0; y < players.size(); y++) {
@@ -469,7 +472,8 @@ namespace GameEngine
     void GameEngine::executeOrdersPhase()
     {
         // ---------------------------------------- ExecuteOrders ---------------------------------------- //
-        if(*usercommand == "execorder")
+        //if(*usercommand == "execorder")
+        if(true)
         {
             //iterate through players and retrieve that player's orderlist and execute its orders
             for (int y = 0; y < players.size(); y++) {
@@ -485,6 +489,7 @@ namespace GameEngine
     //game play loop once the game has started
     void GameEngine::mainGameloop()
     {
+    	cout << "In main game loop" << endl;
         int total = map->getNumOfTerritories();
         //iterate through players
         for(int y = 0; y < players.size(); y++)
@@ -509,6 +514,101 @@ namespace GameEngine
 	void GameEngine::stringToLog(string s)
 	{
 		stringsToLog = s;
+	}
+
+
+	void GameEngine::tournament(vector<string> listofmapfiles, vector<string>  listofplayerstrategies, int numberofgames, int maxnumberofturns)
+	{
+		cout << "Creating Tournament..." << endl;
+		cout << listofmapfiles.size() << endl;
+
+		//Vector to store winners
+		vector<string> winners;
+
+		//For each map file
+		for(int i = 0; i < listofmapfiles.size()-1; i++)
+		{
+			cout << "\n*** For the map" << listofmapfiles[i] << ":     ***" << endl;
+
+			//For each game
+			for(int y = 0; y < numberofgames; y++)
+			{
+				cout << "\nFor game #" << (y + 1) << ":" << endl;
+
+				//Resetting Deck
+				deck = new Deck(50);
+
+				//Loading Map
+				MapLoader loader(listofmapfiles[i]);
+				Map temp = loader.loadMap();
+				map->copy(temp);
+
+				//Validating Map
+				map->validate();
+
+				//Adding the players
+				for(int z = 0; z < listofplayerstrategies.size(); z++)
+				{
+					string name = "Player " + std::to_string(z+1) + " (" + listofplayerstrategies[z] + ")";
+					Player *temp2 = new Player(name);
+					players.push_back(temp2);
+				}
+
+				//Setup game (assign territories and hands to players)
+				usercommand = new string("gamestart");
+				startupPhase();
+
+				//Main game loop
+				string winner = "N/A";
+				for(int i = 0; i < maxnumberofturns; i++)
+				{
+					int total = map->getNumOfTerritories();
+					//iterate through players
+					for(int y = 0; y < players.size(); y++)
+					{
+						int t = players[y]->getNoTerritories();
+						if (t <= 0) //if player has no territories owned then they are eliminated from the game
+						{
+							players[y]->~Player();
+						}
+						if (t >= total) //if player owns all territories then the game is won and over
+						{
+							winner = players[y]->getName();
+							break;
+						}
+					}
+
+					//otherwise there is no reason to break from game and loop will follow the three main phases
+					reinforcementPhase();
+					issueOrdersPhase();
+					executeOrdersPhase();
+				}
+
+				//If no winner assigned declare a draw
+				if (winner == "N/A")
+				{
+					winner = "draw";
+					cout << "The game ended in a draw!";
+					winners.push_back("Draw!");
+				}
+				else
+				{
+					cout << "Game Over. " << players[y]->getName() << " has won." << endl;
+					winners.push_back(players[y]->getName());
+				}
+			}
+		}
+
+		//Display results
+		cout << "\n\n*** Results ***\n" << endl;
+		for(int i = 0; i < listofmapfiles.size()-1; i++)
+		{
+			for(int y = 0; y < numberofgames; y++)
+			{
+				cout << "- Map: " + listofmapfiles[i] + " -> Game #" + std::to_string(y+1) + ": " + winners[i+y] << endl;
+			}
+		}
+
 	}
 
 }
