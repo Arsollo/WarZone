@@ -7,7 +7,10 @@
 #include "Map.h"
 #include "Orders.h"
 #include "Card.h"
+//#include "PlayerStrategy.h"
 
+
+class PlayerStrategy;
 using namespace std;
 
     class Player //header class for Player of warzone containing the declaration of methods to be implemented in the source code as well as data members

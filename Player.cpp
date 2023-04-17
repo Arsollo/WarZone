@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Map.h"
+#include "PlayerStrategy.h"
 
 using namespace std;
 
@@ -61,27 +62,25 @@ using namespace std;
 
     vector<Territory *> Player::toDefend() //returns list of territories to be defended
     {
-        for (int i = 0; i < territories.size(); i++)
-        {
-            //cout << territories[i]->getTerritory_name() << endl;
-        }
-        return territories;
+        return ps->toDefend();
     }
 
     vector<Territory *> Player::toAttack() //returns arbitrary list of territories to be attacked
     {
-        vector<Territory*> tAttack;
-        Territory *dt1 = new Territory(3, "Belgium", 1, 0);
-        Territory *dt2 = new Territory(4, "Norway", 1, 0);
-        tAttack.push_back(dt1);
-        tAttack.push_back(dt2);
+        // vector<Territory*> tAttack;
+        // Territory *dt1 = new Territory(3, "Belgium", 1, 0);
+        // Territory *dt2 = new Territory(4, "Norway", 1, 0);
+        // tAttack.push_back(dt1);
+        // tAttack.push_back(dt2);
 
 
-        for (int i = 0; i < tAttack.size(); i++)
-        {
-            //cout << tAttack[i] << "" << endl;
-        }
-        return tAttack;
+        // for (int i = 0; i < tAttack.size(); i++)
+        // {
+        //     //cout << tAttack[i] << "" << endl;
+        // }
+        // return tAttack;
+
+        return ps->toAttack();
     }
 
     void Player::issueOrder() //adds new order to the orderList
