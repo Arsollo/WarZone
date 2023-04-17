@@ -72,7 +72,7 @@ using namespace std;
 
     vector<Territory *> Player::toAttack() //returns arbitrary list of territories to be attacked
     {
-        
+        return ps->toAttack();
     }
 
     void Player::issueOrder() //adds new order to the orderList

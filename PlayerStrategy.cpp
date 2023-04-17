@@ -10,14 +10,15 @@ void HumanPlayerStrategy::issueOrder()
 	p->orderList.push_back(o);
 }
 
-vector<Territory> HumanPlayerStrategy::toAttack()
+
+vector<Territory*> HumanPlayerStrategy::toAttack()
 {
-	
+	return p->getTerritories();
 }
 
-Territory* HumanPlayerStrategy::toDefend()
+vector<Territory*> HumanPlayerStrategy::toDefend()
 {
-	
+	return p->getTerritories();
 }
 
 
@@ -82,7 +83,9 @@ void BenevolentPlayerStrategy::issueOrder()
     orderList.push_back(order);
 }
 
-vector<Territory> BenevolentPlayerStrategy::toAttack()
+
+vector<Territory*> BenevolentPlayerStrategy::toAttack()
+
 {
 
 }
@@ -112,13 +115,14 @@ void NeutralPlayerStrategy::issueOrder()
 	//do nothing
 }
 
-vector<Territory> NeutralPlayerStrategy::toAttack()
+
+vector<Territory*> NeutralPlayerStrategy::toAttack()
 {
 	//do nothing
-	
+	return p->getTerritories();
 }
 
-Territory* NeutralPlayerStrategy::toDefend()
+vector<Territory*> NeutralPlayerStrategy::toDefend()
 {
 	if (p->getNoTerritories() < oldterritorycount)
 	{
@@ -137,7 +141,9 @@ void CheaterPlayerStrategy::issueOrder()
 	//do nothing
 }
 
-vector<Territory> CheaterPlayerStrategy::toAttack()
+
+vector<Territory*> CheaterPlayerStrategy::toAttack()
+
 {
 	//iterate through the player's territories, find the adjacent ones, and assign them to the cheater player
 	for (auto i : p->getTerritories())
@@ -151,8 +157,10 @@ vector<Territory> CheaterPlayerStrategy::toAttack()
 	}
 }
 
-Territory* CheaterPlayerStrategy::toDefend()
+
+vector<Territory*> CheaterPlayerStrategy::toDefend()
 {
 	//do nothing
-	
+	return p->getTerritories();
+
 }
