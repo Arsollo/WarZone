@@ -1,5 +1,5 @@
 #include "PlayerStrategy.h"
-
+#include "Map.h"
 // Human Player Strategy
 void HumanPlayerStrategy::issueOrder()
 {
@@ -21,16 +21,50 @@ vector<Territory*> HumanPlayerStrategy::toDefend()
 // Aggressive Player Strategy
 void AggressivePlayerStrategy::issueOrder()
 {
+    vector<Order*> orderList = p->getOrderList();
+    Order* order = new Order;
+    orderList.push_back(order);
+}
+
+vector<Territory> AggressivePlayerStrategy::toAttack()
+{
+    vector<Territory*> territories = p->getTerritories();
+    int max = 0;
+    Territory* tmax;
+    for (int i = 0; i < territories.size(); i++)
+    {
+        int temp = territories[i]->getNumOfArmies();
+        Territory* ttemp = territories[i];
+        if (temp >= max)
+        {
+            max = temp;
+            tmax = ttemp;
+        }
+    }
+
+    vector<Territory> tAttack;
+    tAttack = m.getAdjacentTerritories(*tmax);
+
+    return tAttack;
 
 }
 
-vector<Territory*> AggressivePlayerStrategy::toAttack()
+Territory * AggressivePlayerStrategy::toDefend()
 {
-
-}
-
-vector<Territory*> AggressivePlayerStrategy::toDefend()
-{
+    vector<Territory*> territories = p->getTerritories();
+    int max = 0;
+    Territory* tmax;
+    for (int i = 0; i < territories.size(); i++)
+    {
+        int temp = territories[i]->getNumOfArmies();
+        Territory* ttemp = territories[i];
+        if (temp >= max)
+        {
+            max = temp;
+            tmax = ttemp;
+        }
+    }
+    return tmax;
 
 }
 
@@ -39,7 +73,9 @@ vector<Territory*> AggressivePlayerStrategy::toDefend()
 // Benevolent Player Strategy
 void BenevolentPlayerStrategy::issueOrder()
 {
-
+    vector<Order*> orderList = p->getOrderList();
+    Order* order = new Order;
+    orderList.push_back(order);
 }
 
 vector<Territory*> BenevolentPlayerStrategy::toAttack()
@@ -47,9 +83,22 @@ vector<Territory*> BenevolentPlayerStrategy::toAttack()
 
 }
 
-vector<Territory*> BenevolentPlayerStrategy::toDefend()
+Territory * BenevolentPlayerStrategy::toDefend()
 {
-
+    vector<Territory*> territories = p->getTerritories();
+    int min = 100;
+    Territory* tmin;
+    for (int i = 0; i < territories.size(); i++)
+    {
+        int temp = territories[i]->getNumOfArmies();
+        Territory* ttemp = territories[i];
+        if (temp <= min)
+        {
+            min = temp;
+            tmin = ttemp;
+        }
+    }
+    return tmin;
 }
 
 

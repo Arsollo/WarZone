@@ -176,8 +176,7 @@ class Map
 		void setContinents(vector<Continent> cont);
 
 
-
-
+	vector<Territory> getAdjacentTerritories(Territory t);
 };
 
 
