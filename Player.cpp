@@ -66,12 +66,12 @@ using namespace std;
 
     vector<Territory *> Player::toDefend() //returns list of territories to be defended
     {
-        ps->toDefend();
+        return ps->toDefend();
     }
 
     vector<Territory *> Player::toAttack() //returns arbitrary list of territories to be attacked
     {
-        ps->toAttack();
+        return ps->toAttack();
     }
 
     void Player::issueOrder() //adds new order to the orderList
