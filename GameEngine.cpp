@@ -599,15 +599,24 @@ namespace GameEngine
 			}
 		}
 
-		//Display results
+		//Display results & Log it
+		ofstream myFile;
+		myFile.open("TournamentResult.txt", ofstream::app);
+
 		cout << "\n\n*** Results ***\n" << endl;
 		for(int i = 0; i < listofmapfiles.size()-1; i++)
 		{
 			for(int y = 0; y < numberofgames; y++)
 			{
-				cout << "- Map: " + listofmapfiles[i] + " -> Game #" + std::to_string(y+1) + ": " + winners[i+y] << endl;
+				string temp = "- Map: " + listofmapfiles[i] + " -> Game #" + std::to_string(y+1) + ": " + winners[i+y];
+				cout << temp << endl;
+				myFile << temp << endl;
 			}
 		}
+
+
+
+
 
 	}
 

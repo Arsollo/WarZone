@@ -182,9 +182,33 @@ void CommandProcessor::changeState(string s)
 }
 
 
-void CommandProcessor::validate(vector<string>  listofmapfiles, vector<string>  listofplayerstrategies, int numberofgames, int maxnumberofturns)
+bool CommandProcessor::validate(vector<string>  listofmapfiles, vector<string>  listofplayerstrategies, int numberofgames, int maxnumberofturns)
 {
-	//
+	if(listofmapfiles.size()-1 < 1 || listofmapfiles.size()-1 > 5)
+	{
+		cout << "Validation Failed! Incorrect number of map files" << endl;
+		return false;
+	}
+	else if(listofplayerstrategies.size()-1 < 2 || listofplayerstrategies.size()-1 > 4)
+	{
+		cout << "Validation Failed! Incorrect number of player strategies" << endl;
+		return false;
+	}
+	else if(numberofgames < 1 || numberofgames > 5)
+	{
+		cout << "Validation Failed! Incorrect number of games" << endl;
+		return false;
+	}
+	else if(maxnumberofturns < 10 || maxnumberofturns > 50)
+	{
+		cout << "Validation Failed! Incorrect number max turns" << endl;
+		return false;
+	}
+	else
+	{
+		cout << "Validation Passed! All Checks completed" << endl;
+		return true;
+	}
 }
 
 
